@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Test de prédiction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+    <h1>Formulaire de prédiction</h1>
+    <form id="predictionForm">
+        <label for="bedrooms">Chambres:</label>
+        <input type="text" id="bedrooms" name="bedrooms"><br><br>
+        
+        <label for="bathrooms">Salles de bain:</label>
+        <input type="text" id="bathrooms" name="bathrooms"><br><br>
+        <label for="sqft_living">Surface habitable (pieds carrés):</label>
+        <input type="text" id="sqft_living" name="sqft_living"><br><br>
+
+        <label for="sqft_lot">Surface du terrain (pieds carrés):</label>
+        <input type="text" id="sqft_lot" name="sqft_lot"><br><br>
+
+        <label for="floors">Nombre d'étages:</label>
+        <input type="text" id="floors" name="floors"><br><br>
+
+        <label for="waterfront">Bord de l'eau (1 pour oui, 0 pour non):</label>
+        <input type="text" id="waterfront" name="waterfront"><br><br>
+
+        <label for="view">Vue (notation):</label>
+        <input type="text" id="view" name="view"><br><br>
+
+        <label for="condition">Condition (notation):</label>
+        <input type="text" id="condition" name="condition"><br><br>
+
+        <label for="grade">Grade:</label>
+        <input type="text" id="grade" name="grade"><br><br>
+
+        <label for="sqft_above">Surface au-dessus du sol (pieds carrés):</label>
+        <input type="text" id="sqft_above" name="sqft_above"><br><br>
+
+        <label for="sqft_basement">Surface du sous-sol (pieds carrés):</label>
+        <input type="text" id="sqft_basement" name="sqft_basement"><br><br>
+
+        <label for="yr_built">Année de construction:</label>
+        <input type="text" id="yr_built" name="yr_built"><br><br>
+
+        <label for="yr_renovated">Année de rénovation:</label>
+        <input type="text" id="yr_renovated" name="yr_renovated"><br><br>
+
+        <label for="zipcode">Code postal:</label>
+        <input type="text" id="zipcode" name="zipcode"><br><br>
+
+        <label for="lat">Latitude:</label>
+        <input type="text" id="lat" name="lat"><br><br>
+
+        <label for="long">Longitude:</label>
+        <input type="text" id="long" name="long"><br><br>
+
+        <label for="sqft_living15">Surface habitable des 15 voisins les plus proches (pieds carrés):</label>
+        <input type="text" id="sqft_living15" name="sqft_living15"><br><br>
+
+        <label for="sqft_lot15">Surface du terrain des 15 voisins les plus proches (pieds carrés):</label>
+        <input type="text" id="sqft_lot15" name="sqft_lot15"><br><br>
+
+        
+      
+        
+        <button type="button" onclick="makePrediction()">Envoyer</button>
+    </form>
+    
+    <div id="predictionResult"></div>
+    
+    <script>
+        async function makePrediction() {
+            const formData = new FormData(document.getElementById('predictionForm'));
+            const data = Object.fromEntries(formData.entries());
+            const response = await fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+            const result = await response.json();
+            document.getElementById('predictionResult').innerText = 'Prédiction: ' + result.prediction;
+        }
+    </script>
+</body>
+</html>
