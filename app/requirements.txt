@@ -1,9 +1,3 @@
-flask>=2.2.2
-flask-cors>=3.0.10  # Address potential CORS issues (from Response B)
-request>=2.27.1
-requests>=2.28.1  # Consider including if making external API calls (from Response B)
-jsonify>=0.0.6
-jinja2>=3.1.2
-pandas>=1.5.2
-catboost>=2.4.4
-pickle>=0.4  # 
+flask==3.0.2
+pandas==2.2.0
+catboost==1.2.2
